@@ -96,40 +96,46 @@ def validarPermiso(endPoint, metodo, idRol):
         pass
     return tienePermiso
 
-@app.route("/estudiantes", methods=['GET'])
-def getEstudiantes():
+
+@app.route("/candidatos", methods=['GET'])
+def getCandidatos():
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + '/estudiantes'
+    url = dataConfig["url-backend-academic"] + '/candidatos'
     response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
-@app.route("/estudiantes", methods=['POST'])
-def crearEstudiante():
+
+
+
+
+
+@app.route("/candidato", methods=['POST'])
+def crearCandidato():
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + '/estudiantes'
+    url = dataConfig["url-backend-academic"] + '/candidato'
     response = requests.post(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
-@app.route("/estudiantes/<string:id>", methods=['GET'])
-def getEstudiante(id):
+@app.route("/candidatos/<string:id>", methods=['GET'])
+def getCandidatos(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + '/estudiantes/' + id
+    url = dataConfig["url-backend-academic"] + '/candidatos/' + id
     response = requests.get(url, headers=headers)
     json = response.json()
     return jsonify(json)
-@app.route("/estudiantes/<string:id>", methods=['PUT'])
-def modificarEstudiante(id):
+@app.route("/candidato/<string:id>", methods=['PUT'])
+def modificarCandidato(id):
     data = request.get_json()
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + '/estudiantes/' + id
+    url = dataConfig["url-backend-academic"] + '/candidato/' + id
     response = requests.put(url, headers=headers, json=data)
     json = response.json()
     return jsonify(json)
-@app.route("/estudiantes/<string:id>", methods=['DELETE'])
-def eliminarEstudiante(id):
+@app.route("/candidato/<string:id>", methods=['DELETE'])
+def eliminarCandidato(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    url = dataConfig["url-backend-academic"] + '/estudiantes/' + id
+    url = dataConfig["url-backend-academic"] + '/candidato/' + id
     response = requests.delete(url, headers=headers)
     json = response.json()
     return jsonify(json)
