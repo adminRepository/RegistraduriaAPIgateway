@@ -7,32 +7,6 @@ from waitress import serve
 import datetime
 import requests
 import re
-
-app = Flask(__name__)
-cors = CORS(app)
-
-@app.route("/", methods=['GET'])
-def test():
-    json = {}
-    json["message"] = "Server running ..."
-    return jsonify(json)
-
-def loadFileConfig():
-    with open('config.json') as f:
-        data = json.load(f)
-    return data
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    dataConfig = loadFileConfig()
-    print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
-    serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
-
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
 from flask_jwt_extended import create_access_token, verify_jwt_in_request
@@ -40,6 +14,9 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
+
+app = Flask(__name__)
+cors = CORS(app)
 
 app.config["JWT_SECRET_KEY"] = "super-secret" # Cambiar por el que seconveniente
 jwt = JWTManager(app)
@@ -118,7 +95,7 @@ def crearCandidato():
     json = response.json()
     return jsonify(json)
 @app.route("/candidatos/<string:id>", methods=['GET'])
-def getCandidatos(id):
+def getCandidato(id):
     headers = {"Content-Type": "application/json; charset=utf-8"}
     url = dataConfig["url-backend-academic"] + '/candidatos/' + id
     response = requests.get(url, headers=headers)
@@ -140,3 +117,27 @@ def eliminarCandidato(id):
     json = response.json()
     return jsonify(json)
 
+
+
+
+@app.route("/", methods=['GET'])
+def test():
+    json = {}
+    json["message"] = "Server running ..."
+    return jsonify(json)
+
+def loadFileConfig():
+    with open('config.json') as f:
+        data = json.load(f)
+    return data
+
+def print_hi(name):
+    # Use a breakpoint in the code line below to debug your script.
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    dataConfig = loadFileConfig()
+    print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
+    serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
